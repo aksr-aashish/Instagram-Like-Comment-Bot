@@ -44,10 +44,7 @@ sleep(2)
 likes = 0
 comments = 0
 
-# Index for tags in hashtag list
-tag_index = 0
-
-for hashtag in hashtag_list:
+for tag_index, hashtag in enumerate(hashtag_list):
     browser.get(
         f'https://www.instagram.com/explore/tags/{hashtag_list[tag_index]}/')
     logger.info(f'Exploring #{hashtag}')
@@ -59,8 +56,7 @@ for hashtag in hashtag_list:
     first_thumbnail.click()
 
     # Go through x number of photos per hashtag
-    for post in range(1, number_of_posts):
-
+    for _ in range(1, number_of_posts):
         # Check if the post is already liked
         # If not, then like, comment, and go to next post
         try:
@@ -98,10 +94,6 @@ for hashtag in hashtag_list:
         browser.find_element_by_xpath("//button/div/*[*[local-name()='svg']/@aria-label='Next']/*").click()
         logger.info('Getting next post')
         sleep(wait_between_posts)
-
-    # Go to the next index in hashtags_list
-    tag_index += 1
-
 
 logger.info(f'Liked {likes} posts')
 logger.info(f'Commented on {comments} posts')
